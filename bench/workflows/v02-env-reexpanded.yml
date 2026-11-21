@@ -1,0 +1,9 @@
+on: issue_comment
+permissions: { contents: read }
+env:
+  BODY: ${{ github.event.comment.body }}
+jobs:
+  bot:
+    runs-on: ubuntu-latest
+    steps:
+      - run: ./bot.sh "${{ env.BODY }}"

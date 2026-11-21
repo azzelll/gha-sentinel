@@ -1,0 +1,7 @@
+on: workflow_run
+permissions: { contents: read }
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "${{ github.event.workflow_run.head_commit.message }}"

@@ -1,0 +1,9 @@
+on: push
+permissions: { contents: read }
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: some-org/deploy-action@v2
+      - uses: other/pinned-action@0123456789abcdef0123456789abcdef01234567

@@ -1,0 +1,8 @@
+on: pull_request_target
+permissions: { pull-requests: write }
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci && node scripts/label.js

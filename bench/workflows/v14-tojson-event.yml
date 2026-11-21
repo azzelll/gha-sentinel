@@ -1,0 +1,7 @@
+on: discussion
+permissions: { contents: read }
+jobs:
+  dump:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo '${{ toJSON(github.event) }}' > event.json

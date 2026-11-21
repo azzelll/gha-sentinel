@@ -1,0 +1,9 @@
+on: issue_comment
+permissions: { contents: read }
+jobs:
+  slash-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: gh pr checkout ${{ github.event.issue.number }}
+      - run: make test

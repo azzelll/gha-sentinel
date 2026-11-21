@@ -1,0 +1,7 @@
+on: pull_request
+permissions: { contents: read }
+jobs:
+  lint-title:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "${{ github.event.pull_request.title }}" | grep -E '^(feat|fix):'

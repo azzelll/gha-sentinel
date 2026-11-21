@@ -1,0 +1,14 @@
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+permissions: { contents: read }
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - run: bash ./report.sh

@@ -1,0 +1,7 @@
+on: pull_request_target
+permissions: { contents: read }
+jobs:
+  info:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "${{ github.event.pull_request.number }} by ${{ github.event.pull_request.user.login }} on ${{ github.repository }} sha ${{ github.event.pull_request.head.sha }}"

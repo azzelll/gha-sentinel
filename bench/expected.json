@@ -1,0 +1,141 @@
+{
+  "_comment": "Ground truth written from GitHub Actions semantics, not from scanner output. Each entry: [rule, severity, confidence]. v=vulnerable, s=safe, g=guarded, l=low impact, i=informational.",
+  "v01-issue-title-injection.yml": [
+    [
+      "script-injection",
+      "high",
+      "high"
+    ]
+  ],
+  "s01-issue-title-via-env.yml": [],
+  "v02-env-reexpanded.yml": [
+    [
+      "script-injection",
+      "high",
+      "high"
+    ]
+  ],
+  "v03-github-script.yml": [
+    [
+      "script-injection",
+      "high",
+      "high"
+    ]
+  ],
+  "v04-head-ref-bracket.yml": [
+    [
+      "script-injection",
+      "high",
+      "high"
+    ]
+  ],
+  "v05-commit-messages-array.yml": [
+    [
+      "script-injection",
+      "high",
+      "high"
+    ]
+  ],
+  "l01-pr-title-unprivileged.yml": [
+    [
+      "script-injection",
+      "low",
+      "high"
+    ]
+  ],
+  "i01-push-head-commit.yml": [
+    [
+      "script-injection",
+      "info",
+      "high"
+    ]
+  ],
+  "s02-trusted-contexts.yml": [],
+  "v06-pwn-request.yml": [
+    [
+      "pwn-request",
+      "critical",
+      "high"
+    ]
+  ],
+  "v07-pwn-request-gh-checkout.yml": [
+    [
+      "pwn-request",
+      "critical",
+      "high"
+    ]
+  ],
+  "v08-pwn-request-local-action.yml": [
+    [
+      "pwn-request",
+      "critical",
+      "high"
+    ]
+  ],
+  "s03-prt-base-checkout.yml": [],
+  "s04-prt-checkout-no-exec.yml": [],
+  "g01-pwn-request-guarded.yml": [
+    [
+      "pwn-request",
+      "critical",
+      "low"
+    ]
+  ],
+  "g02-label-gated.yml": [
+    [
+      "pwn-request",
+      "critical",
+      "low"
+    ]
+  ],
+  "v09-no-permissions-privileged.yml": [
+    [
+      "excessive-permissions",
+      "medium",
+      "medium"
+    ]
+  ],
+  "v10-write-all.yml": [
+    [
+      "excessive-permissions",
+      "medium",
+      "high"
+    ]
+  ],
+  "v11-self-hosted-pr.yml": [
+    [
+      "self-hosted-runner",
+      "medium",
+      "medium"
+    ]
+  ],
+  "v12-artifact-poisoning.yml": [
+    [
+      "artifact-poisoning",
+      "medium",
+      "medium"
+    ]
+  ],
+  "v13-unpinned.yml": [
+    [
+      "unpinned-action",
+      "low",
+      "high"
+    ]
+  ],
+  "s05-dispatch-input.yml": [],
+  "v14-tojson-event.yml": [
+    [
+      "script-injection",
+      "high",
+      "high"
+    ]
+  ],
+  "v15-step-env-reexpanded.yml": [
+    [
+      "script-injection",
+      "high",
+      "high"
+    ]
+  ]
+}
