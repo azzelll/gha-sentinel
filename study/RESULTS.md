@@ -3,7 +3,7 @@
 - Repositories sampled: **1000** (GitHub search, stars > 1000, sorted by stars).
 - Repositories with at least one workflow: **814**; workflows parsed: **10213** (2 files failed to parse).
 - Static analysis only. No workflow was run and no repository was contacted beyond reading public files.
-- Per-repository results are kept private until maintainers have had time to fix them.
+- Per-repository results are not published: naming unfixed vulnerabilities would put those projects at risk.
 
 ## Triggers outsiders can fire
 

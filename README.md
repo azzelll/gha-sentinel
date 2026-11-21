@@ -9,7 +9,7 @@ CI/CD is supply chain. A workflow that expands an issue title into a shell scrip
 Scanned the workflows of the **1,000 most-starred GitHub repositories** (814 have workflows, 10,213 workflow files). Full write-up: [`study/RESULTS.md`](study/RESULTS.md).
 
 - **Every critical/high finding was reviewed by hand.** The first version reported 31 high-confidence critical/high findings; only **1** was exploitable by an outsider (precision 4%). The review surfaced **six false-positive classes** (trusted `workflow_run` upstreams, guards inherited through `needs:`, event gates, `git fetch` mistaken for checkout, registry-only installs, disabled jobs). Fixing them cut the list to **2** findings (1 exploitable, 1 depending on repository settings) **without losing the real one**. Each fix is pinned by a benchmark fixture.
-- **1 confirmed pwn request**: `pull_request_target` checks out the PR and runs `pip install -e .` with the repository token. It is being reported privately; the repository is not named and no other detail is given until it is fixed.
+- **1 confirmed pwn request**: `pull_request_target` checks out the PR and runs `pip install -e .` with the repository token. Per-repository findings are not published, so the repository is not named.
 - **54% of repositories** reference third-party actions by a mutable tag (6,234 references), and 10% run outsider-triggerable workflows with excessive token permissions.
 - **LLM triage was not safe as a filter.** A local 8B model (qwen3:8b) abstained on 30 of 31 findings with a plain prompt. A checklist prompt raised agreement with manual review to 22/31, but every one of its 6 "exploitable" verdicts was wrong and it dismissed the one real vulnerability, reading `pip install --upgrade pip` and missing the `pip install -e .` below it. Deterministic rules informed by manual review did far better.
 
@@ -64,7 +64,7 @@ uv run python study/triage_run.py           # LLM triage of critical/high findin
 uv run python study/analyze.py              # aggregate → study/RESULTS.md
 ```
 
-Only public workflow files are read; nothing is executed. **Per-repository findings stay in `study/private/` (git-ignored)** and are reported to maintainers through private vulnerability reporting before anything specific is published.
+Only public workflow files are read; nothing is executed. **Per-repository findings stay in `study/private/` (git-ignored)** and are not published, since naming unfixed vulnerabilities would put those projects at risk.
 
 ## Limitations
 

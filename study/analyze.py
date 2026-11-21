@@ -30,7 +30,7 @@ lines = [
     f"- Repositories with at least one workflow: **{n}**; workflows parsed: **{sum(r['workflows'] for r in rows)}**"
     f" ({sum(r['parse_errors'] for r in rows)} files failed to parse).",
     "- Static analysis only. No workflow was run and no repository was contacted beyond reading public files.",
-    "- Per-repository results are kept private until maintainers have had time to fix them.",
+    "- Per-repository results are not published: naming unfixed vulnerabilities would put those projects at risk.",
     "",
     "## Triggers outsiders can fire",
     "",
