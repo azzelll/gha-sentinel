@@ -59,3 +59,34 @@ def test_cli_exit_code_and_sarif(tmp_path, capsys):
 
 def test_sarif_of_nothing_is_valid():
     assert json.loads(sarif([]))["runs"][0]["results"] == []
+
+
+RELEASE = "name: Release\non: push\njobs:\n  b:\n    runs-on: x\n    steps:\n      - run: echo build\n"
+CI = "name: CI\non: pull_request\njobs:\n  b:\n    runs-on: x\n    steps:\n      - run: echo test\n"
+PUBLISH = (
+    "on:\n  workflow_run:\n    workflows: [{up}]\n    types: [completed]\npermissions: {{}}\njobs:\n  p:\n"
+    "    runs-on: x\n    steps:\n      - uses: actions/checkout@v4\n        with:\n"
+    "          ref: ${{{{ github.event.workflow_run.head_sha }}}}\n      - run: make publish\n"
+)
+
+
+def test_workflow_run_from_trusted_upstream_is_not_a_pwn_request():
+    wfs = [
+        parse_workflow(RELEASE, "release.yml"),
+        parse_workflow(PUBLISH.format(up="Release"), "publish.yml"),
+    ]
+    assert [f.rule for f in scan(wfs)] == []
+
+
+def test_workflow_run_from_pr_upstream_is_a_pwn_request():
+    wfs = [
+        parse_workflow(CI, "ci.yml"),
+        parse_workflow(PUBLISH.format(up="CI"), "publish.yml"),
+    ]
+    assert [f.rule for f in scan(wfs)] == ["pwn-request"]
+
+
+def test_unknown_upstream_is_treated_as_untrusted():
+    assert [
+        f.rule for f in scan([parse_workflow(PUBLISH.format(up="Elsewhere"), "p.yml")])
+    ] == ["pwn-request"]

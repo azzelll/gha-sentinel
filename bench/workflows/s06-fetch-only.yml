@@ -1,0 +1,12 @@
+on: pull_request_target
+permissions: { contents: read, pull-requests: write }
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          git fetch origin pull/${{ github.event.pull_request.number }}/head:pr
+          BASE=$(git merge-base HEAD pr)
+          git show pr:data.json > data.json.head
+      - run: python scripts/validate.py data.json.head

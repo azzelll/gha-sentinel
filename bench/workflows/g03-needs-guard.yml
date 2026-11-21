@@ -1,0 +1,16 @@
+on: issue_comment
+permissions: { contents: read }
+jobs:
+  authorize:
+    if: contains(fromJSON('["MEMBER","OWNER","COLLABORATOR"]'), github.event.comment.author_association)
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ok
+  test:
+    needs: authorize
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: refs/pull/${{ github.event.issue.number }}/merge
+      - run: make test

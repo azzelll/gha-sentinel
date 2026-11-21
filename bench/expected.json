@@ -137,5 +137,36 @@
       "high",
       "high"
     ]
+  ],
+  "s06-fetch-only.yml": [],
+  "g03-needs-guard.yml": [
+    [
+      "pwn-request",
+      "critical",
+      "low"
+    ]
+  ],
+  "s07-registry-only.yml": [],
+  "g04-event-gated.yml": [
+    [
+      "pwn-request",
+      "critical",
+      "low"
+    ]
+  ],
+  "s08-disabled-job.yml": [],
+  "g05-merged-only.yml": [
+    [
+      "pwn-request",
+      "critical",
+      "low"
+    ]
+  ],
+  "g06-head-repository.yml": [
+    [
+      "script-injection",
+      "high",
+      "low"
+    ]
   ]
 }

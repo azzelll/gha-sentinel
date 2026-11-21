@@ -1,0 +1,11 @@
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+permissions: { contents: read }
+jobs:
+  notify:
+    if: github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Build failed on ${{ github.event.workflow_run.head_branch }}"

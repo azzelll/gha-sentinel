@@ -1,0 +1,14 @@
+on: pull_request_target
+permissions: { contents: read }
+jobs:
+  format-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - run: |
+          python3 -m venv .venv
+          npm install --global prettier@3
+          pip install black
+      - run: black --check . && prettier --check .

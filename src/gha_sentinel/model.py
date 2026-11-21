@@ -64,11 +64,13 @@ class Job:
     environment: Any
     steps: list[Step] = field(default_factory=list)
     uses: str | None = None  # reusable workflow call
+    needs: list[str] = field(default_factory=list)
 
 
 @dataclass
 class Workflow:
     path: str
+    name: str | None
     triggers: dict[str, Any]
     permissions: Any
     env: dict[str, Any]
@@ -122,6 +124,14 @@ def parse_workflow(text: str, path: str = "<workflow>") -> Workflow:
             if_=_str(j.get("if")),
             environment=j.get("environment"),
             uses=_str(j.get("uses")),
+            needs=[
+                str(n)
+                for n in (
+                    [j["needs"]]
+                    if isinstance(j.get("needs"), str)
+                    else j.get("needs") or []
+                )
+            ],
         )
         for i, s in enumerate(j.get("steps") or []):
             if not isinstance(s, dict):
@@ -141,6 +151,7 @@ def parse_workflow(text: str, path: str = "<workflow>") -> Workflow:
         jobs.append(job)
     return Workflow(
         path=path,
+        name=_str(raw.get("name")),
         triggers=_triggers(raw.get("on")),
         permissions=raw.get("permissions"),
         env=_dict(raw.get("env")),
