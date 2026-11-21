@@ -152,12 +152,22 @@ if v1_path.exists() and v2_path.exists():
         lines.append(
             f"- LLM triage ({got[0].get('model', 'local model')}, {title}) on the {len(got)} v1 findings: "
             f"agrees with manual review on **{agree}/{len(got)}**, abstains ('unclear') on {abstain}, "
-            f"says 'exploitable' {len(pos)} times ({tp} correct)."
+            f"says 'exploitable' {len(pos)} times ({tp} correct)"
+            + "".join(
+                f"; on the confirmed vulnerability it answered **{v[field]}**"
+                for v in got
+                if v["manual"] == "exploitable"
+            )
+            + "."
         )
     if any("llm_v2" in v for v in triaged):
         lines.append(
             "- Caveat: prompt v2 was written after reading these findings, so its score on them is optimistic. "
             "It is reported to show what a checklist prompt changes, not as a held-out result."
+        )
+        lines.append(
+            "- Conclusion: with either prompt, using this model as a filter would have discarded the one real "
+            "vulnerability. LLM triage is reported as an aid for reviewers, never as a gate."
         )
 
 (ROOT / "RESULTS.md").write_text("\n".join(lines) + "\n")

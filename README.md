@@ -11,7 +11,7 @@ Scanned the workflows of the **1,000 most-starred GitHub repositories** (814 hav
 - **Every critical/high finding was reviewed by hand.** The first version reported 31 high-confidence critical/high findings; only **1** was exploitable by an outsider (precision 4%). The review surfaced **six false-positive classes** (trusted `workflow_run` upstreams, guards inherited through `needs:`, event gates, `git fetch` mistaken for checkout, registry-only installs, disabled jobs). Fixing them cut the list to **2** findings (1 exploitable, 1 depending on repository settings) **without losing the real one**. Each fix is pinned by a benchmark fixture.
 - **1 confirmed pwn request**: `pull_request_target` checks out the PR and runs `pip install -e .` with the repository token. It is being reported privately; the repository is not named and no other detail is given until it is fixed.
 - **54% of repositories** reference third-party actions by a mutable tag (6,234 references), and 10% run outsider-triggerable workflows with excessive token permissions.
-- **LLM triage did not help.** A local 8B model (qwen3:8b) abstained on 30 of 31 findings and was wrong the one time it said "exploitable". Deterministic rules informed by manual review did far better.
+- **LLM triage was not safe as a filter.** A local 8B model (qwen3:8b) abstained on 30 of 31 findings with a plain prompt. A checklist prompt raised agreement with manual review to 22/31, but every one of its 6 "exploitable" verdicts was wrong and it dismissed the one real vulnerability, reading `pip install --upgrade pip` and missing the `pip install -e .` below it. Deterministic rules informed by manual review did far better.
 
 
 ## What it detects

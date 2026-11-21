@@ -52,4 +52,7 @@ v1's false positives fell into six classes, each now fixed and pinned by a bench
 6. Jobs disabled with `if: false`.
 
 No finding judged exploitable was lost between v1 and v2. Two findings judged *unclear* in v1 (a docs generator and a code formatter run on PR code with secrets or a write token) are no longer reported at high confidence, because the steps that matched only install registry packages; they still deserve a manual look and are tracked privately.
-- LLM triage (qwen3:8b, prompt v1) on the 31 v1 findings: agrees with manual review on **3/31**, abstains ('unclear') on 30, says 'exploitable' 1 times (0 correct).
+- LLM triage (qwen3:8b, prompt v1) on the 31 v1 findings: agrees with manual review on **3/31**, abstains ('unclear') on 30, says 'exploitable' 1 times (0 correct); on the confirmed vulnerability it answered **unclear**.
+- LLM triage (qwen3:8b, prompt v2) on the 31 v1 findings: agrees with manual review on **22/31**, abstains ('unclear') on 0, says 'exploitable' 6 times (0 correct); on the confirmed vulnerability it answered **not_exploitable**.
+- Caveat: prompt v2 was written after reading these findings, so its score on them is optimistic. It is reported to show what a checklist prompt changes, not as a held-out result.
+- Conclusion: with either prompt, using this model as a filter would have discarded the one real vulnerability. LLM triage is reported as an aid for reviewers, never as a gate.
