@@ -1,0 +1,26 @@
+[project]
+name = "gha-sentinel"
+version = "0.1.0"
+description = "Static security scanner for GitHub Actions workflows"
+readme = "README.md"
+license = "MIT"
+authors = [
+    { name = "azzelll", email = "madeshandykrisnanda@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "pyyaml==6.0.3",
+]
+
+[project.scripts]
+gha-sentinel = "gha_sentinel:main"
+
+[build-system]
+requires = ["uv_build>=0.11.19,<0.12.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest==8.4.2",
+    "ruff==0.14.4",
+]
